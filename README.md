@@ -26,3 +26,10 @@ cột *Mã khung* + cột *Link ảnh (Google Drive)*. Dán link vào Sheet, t�
 
 ## Bản xem nhanh trên Claude
 `preview/` do `build/build.py` sinh ra (CSS/JS nhúng thẳng vào trang). Bản này không đọc được Google Sheet nên chỉ hiện khung mẫu.
+
+## Sửa nội dung trực tiếp (từ phiên bản này)
+- Toàn bộ nội dung 9 trang nằm trong **`noidung.json`** — đây là NGUỒN CHÍNH.
+- Sửa trên bản Claude: nút **"✎ Sửa nội dung"** → bấm vào chữ để sửa, bấm khung ảnh để tải ảnh → **Lưu**.
+  Khi đăng lên GitHub, lấy `noidung.json` (và ảnh đã tải) mới nhất từ bản Claude.
+- `dist/index.html`: trang khung bản GitHub (nút sửa tự ẩn ngoài Claude). `dist/preview.html`: bản Claude.
+- `build/build.py` + `build/spa.py --reset` chỉ dùng để dựng lại từ đầu (sẽ GHI ĐÈ nội dung đã sửa).

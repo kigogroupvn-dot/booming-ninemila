@@ -90,7 +90,7 @@ def topbar(current):
     back = '' if current == "index" else '<a class="btn hide-m" href="index.html">← Tổng quan IMC</a>'
     return f'<div class="top"><a class="logo" href="index.html"><img src="assets/logo-white.png" alt="Ninemila"></a><nav>{back}{menu(current)}</nav></div>'
 def stats(items, note=""):
-    cells = "".join(f'<div class="stat"><b>{E(a).replace(" ₫", "&nbsp;₫")}</b><span>{E(b)}</span>{f"<small>{E(c)}</small>" if c else ""}</div>' for a, b, c in items)
+    cells = "".join(f'<div class="stat"><b>{E(a).replace(" ₫", "&nbsp;₫").replace("≥ ", "≥&nbsp;").replace("≈ ", "≈&nbsp;")}</b><span>{E(b)}</span>{f"<small>{E(c)}</small>" if c else ""}</div>' for a, b, c in items)
     return f'<div class="stats-band"><div class="wrap"><div class="stats">{cells}</div>{f"<div class=\"band-note\">{E(note)}</div>" if note else ""}</div></div>'
 FOOT = """<footer class="footer"><div class="wrap"><img src="assets/logo-white.png" alt="Ninemila"><span>Booming Ninemila · Kế hoạch truyền thông tích hợp 2026–2027 · Khối Marketing, Kigo Group</span></div></footer>
 <script src="config.js"></script>
