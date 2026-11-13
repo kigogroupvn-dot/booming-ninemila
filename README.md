@@ -19,3 +19,10 @@ Toàn bộ chữ và số liệu nằm trong `build/build.py`. Sửa ở đó r�
 font Philosopher · Be Vietnam Pro · Josefin Sans. `site.js`: menu, lọc ma trận, mục lục.
 
 Có `robots.txt` + thẻ noindex để chặn Google.
+
+## Ảnh demo (khung ảnh)
+Mỗi khung ảnh có một **mã khung** (hiện trên khung). Ảnh lấy từ tab **"Ảnh IMC"** trong Google Sheet ghi ở `config.js`:
+cột *Mã khung* + cột *Link ảnh (Google Drive)*. Dán link vào Sheet, tải lại web là thấy ảnh. Mã `nen-bia` đổi ảnh nền bìa.
+
+## Bản xem nhanh trên Claude
+`preview/` do `build/build.py` sinh ra (CSS/JS nhúng thẳng vào trang). Bản này không đọc được Google Sheet nên chỉ hiện khung mẫu.
