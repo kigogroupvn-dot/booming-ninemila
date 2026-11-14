@@ -172,7 +172,7 @@ APP_JS = r"""
 
   // ── Khởi động ──
   (async () => {
-    try { DATA = await fetch('noidung.json', { cache: 'no-store' }).then(r => r.json()); }
+    try { DATA = await fetch('noidung.json' + (location.hostname.endsWith('github.io') ? '?v=' + Date.now() : ''), { cache: 'no-store' }).then(r => r.json()); }
     catch (e) { app.innerHTML = '<p style="padding:40px">Không tải được nội dung (noidung.json).</p>'; return; }
     render(pageFromHash());
     if (window.claude?.use) {
