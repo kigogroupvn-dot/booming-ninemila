@@ -412,6 +412,25 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:8px}
 .matrix.m4 td.row{width:16%}
 .matrix td.empty{background:none;border:1px dashed var(--grey);color:var(--grey-dark);text-align:center;vertical-align:middle}
 .layout > *,.content,.gd-body,.gd-cols > *{min-width:0}
+/* Nút truy cập kênh (TikTok, Fanpage…) trên ảnh bìa */
+.go-links{display:grid;gap:10px;margin-top:28px;max-width:620px}
+.go-links .label{color:rgba(240,199,156,.9);margin-bottom:2px}
+.gl-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.gl-row b{width:162px;font:600 14px "Be Vietnam Pro";color:#fff}
+@media (max-width:640px){.gl-row b{width:100%}}
+/* Trang chủ · Kênh chính thức */
+.ch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ch{border:1px solid var(--grey);border-top:3px solid var(--orange);background:#fff;padding:22px 24px 26px;display:grid;gap:18px;align-content:start}
+.ch > .label{color:var(--orange)}
+.ch-row{display:grid;gap:8px}
+.ch-row b{font:600 14px "Be Vietnam Pro";color:var(--choco)}
+.ch-btns{display:flex;flex-wrap:wrap;gap:6px}
+.lk{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--choco);color:var(--choco);background:#fff;padding:10px 14px;font:500 13px/1 "Be Vietnam Pro";text-decoration:none;border-radius:2px;transition:.2s;white-space:nowrap}
+.lk:hover{background:var(--choco);color:#fff}
+.lk.solid{background:var(--choco);color:#fff}
+.lk.solid:hover{background:var(--orange);border-color:var(--orange)}
+.ch .soon{color:var(--muted);font-size:14px}
+@media (max-width:900px){.ch-grid{grid-template-columns:1fr}}
 
 .toc a[data-goto]{cursor:pointer}
 /* ── Lịch content Fanpage (dựng thẳng vào trang) ── */
@@ -539,7 +558,7 @@ body.editing .slot{cursor:pointer}
   }
 
   // ── Chế độ sửa ──
-  const LOCK = '.menu, .top nav, .slot, .chips, .go, .toc, .stack, .embed';
+  const LOCK = '.menu, .top nav, .slot, .chips, .go, .go-links, .ch-grid, .toc, .stack, .embed';
   function setEditable(on) {
     app.contentEditable = on ? 'true' : 'false';
     app.querySelectorAll(LOCK).forEach(el => el.contentEditable = on ? 'false' : 'inherit');

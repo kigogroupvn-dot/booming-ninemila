@@ -105,7 +105,7 @@ APP_JS = r"""
   }
 
   // ── Chế độ sửa ──
-  const LOCK = '.menu, .top nav, .slot, .chips, .go, .toc, .stack, .embed';
+  const LOCK = '.menu, .top nav, .slot, .chips, .go, .go-links, .ch-grid, .toc, .stack, .embed';
   function setEditable(on) {
     app.contentEditable = on ? 'true' : 'false';
     app.querySelectorAll(LOCK).forEach(el => el.contentEditable = on ? 'false' : 'inherit');
