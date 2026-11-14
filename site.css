@@ -377,3 +377,32 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:8px}
 .hours + .prose{margin-top:20px}
 @media (max-width:900px){.stat b{white-space:normal}.equation.sm .t b{font-size:28px}}
 .phase-cols + .prose,.gallery + .prose,.devices + .prose{margin-top:20px}
+/* ── Kế hoạch theo giai đoạn (chi tiết) ── */
+.gd-list{display:grid;gap:0;border-top:2px solid var(--choco)}
+.gd{display:grid;grid-template-columns:230px 1fr;gap:32px;padding:30px 0;border-bottom:1px solid var(--line)}
+.gd-head .m{font:600 11px/1.5 "Josefin Sans";letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.gd-head h3{font:700 26px/1.15 "Philosopher",serif;color:var(--choco);margin:6px 0 4px}
+.gd-head h3 em{display:block;font-style:italic;font-weight:400;font-size:19px;color:var(--amber)}
+.gd-head .vol{margin-top:14px;font:700 34px/1 "Philosopher",serif;color:var(--choco)}
+.gd-head .vol small{display:block;font:500 12px "Be Vietnam Pro";color:var(--muted);margin-top:6px}
+.gd-head .moc{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.gd-head .moc span{font:600 11px/1 "Be Vietnam Pro";padding:6px 9px;border:1px solid var(--grey);border-radius:999px;color:var(--choco);background:#fff}
+.gd-head .moc span.hot{background:var(--choco);border-color:var(--choco);color:#fff}
+.gd-body{display:grid;gap:18px}
+.gd-goal{font:italic 400 18px/1.5 "Philosopher",serif;color:var(--choco);padding-left:16px;border-left:3px solid var(--orange)}
+.gd-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.gd-col h4{font:600 10px/1.5 "Josefin Sans";letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.gd-col ul{list-style:none;display:grid;gap:7px}
+.gd-col li{position:relative;padding-left:16px;font-size:14.5px}
+.gd-col li:before{content:"";position:absolute;left:1px;top:.75em;width:7px;height:2px;background:var(--amber)}
+.quote{display:block;margin-top:4px;font:italic 400 15px/1.45 "Philosopher",serif;color:var(--choco);background:var(--cream);padding:8px 12px;border-radius:2px}
+.gd-foot{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:14px;border-top:1px dashed var(--grey)}
+.gd-foot div{font-size:14px}
+.gd-foot b{display:block;font:600 10px/1.5 "Josefin Sans";letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+@media (max-width:900px){.gd,.gd-cols,.gd-foot{grid-template-columns:1fr;gap:14px}.gd{padding:22px 0}}
+/* Ma trận 4 giai đoạn */
+.matrix.m4{min-width:1080px}
+.matrix.m4 td{width:21%}
+.matrix.m4 td.row{width:16%}
+.matrix td.empty{background:none;border:1px dashed var(--grey);color:var(--grey-dark);text-align:center;vertical-align:middle}
+.layout > *,.content,.gd-body,.gd-cols > *{min-width:0}
