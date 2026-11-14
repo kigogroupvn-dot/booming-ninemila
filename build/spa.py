@@ -75,18 +75,32 @@ APP_JS = r"""
     app.querySelectorAll('.content section[id]').forEach(s => io.observe(s));
   }
 
-  // ── Nhúng trang khác (Fanpage & Instagram) ──
-  // Trên GitHub: hiện trang trong khung. Trên Claude (không cho nhúng web khác): hiện thẻ giới thiệu + nút mở.
+  // ── Lịch content Fanpage & Instagram ──
+  // Dùng chung bộ mã với trang lịch content (lich.js + lich.css + Google Sheet): sửa một nơi, hai nơi cùng cập nhật.
+  // Lịch được dựng trong vùng tách biệt (shadow DOM) để style hai web không đè lên nhau.
+  // Trên Claude (không cho tải mã/dữ liệu từ web khác): hiện thẻ giới thiệu + nút mở.
+  let lichReady;
+  function loadLich(base) {
+    if (window.NinemilaLich) return Promise.resolve();
+    return lichReady ||= ['config.js', 'data.js', 'lich.js'].reduce((p, f) => p.then(() => new Promise((ok, no) => {
+      const sc = document.createElement('script'); sc.src = base + f; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc);
+    })), Promise.resolve()).catch(e => { lichReady = null; throw e; });
+  }
+  function lichCard(el, base, msg) {
+    el.innerHTML = '<div class="embed-card"><b>Lịch &amp; brief content fanpage</b><p>' + msg + '</p><a class="btn-dark" href="' + base + '" target="_blank" rel="noopener">Mở trang lịch content ↗</a></div>';
+  }
   function initEmbed() {
-    app.querySelectorAll('.embed[data-src]').forEach(el => {
-      const src = el.dataset.src;
-      if (window.claude) {
-        el.classList.add('is-card');
-        el.innerHTML = '<div class="embed-card"><b>Trang lịch &amp; brief đang vận hành</b><p>Bản xem trên Claude không nhúng được trang web khác. Trên bản GitHub, trang này hiện ngay tại đây.</p><a class="btn-dark" href="' + src + '" target="_blank" rel="noopener">Mở trang lịch content ↗</a></div>';
-      } else {
-        el.classList.add('is-frame');
-        el.innerHTML = '<iframe src="' + src + '" title="Lịch &amp; brief content fanpage Ninemila" loading="lazy"></iframe>';
-      }
+    app.querySelectorAll('.embed[data-lich]').forEach(el => {
+      const base = el.dataset.lich;
+      if (window.claude) return lichCard(el, base, 'Bản xem trên Claude không tải được dữ liệu từ Google Sheet. Trên bản GitHub, lịch hiện ngay tại đây và tự cập nhật theo Sheet.');
+      el.innerHTML = '<p class="embed-wait">Đang tải lịch content…</p>';
+      loadLich(base).then(() => {
+        if (!el.isConnected) return;
+        el.innerHTML = '';
+        const sh = el.attachShadow({ mode: 'open' });
+        sh.innerHTML = '<link rel="stylesheet" href="' + base + 'lich.css"><div></div>';
+        window.NinemilaLich.mount(sh.lastChild, { embedded: true, base });
+      }).catch(() => lichCard(el, base, 'Chưa tải được lịch content. Kiểm tra mạng rồi tải lại trang, hoặc mở trang riêng.'));
     });
   }
 
@@ -108,7 +122,7 @@ APP_JS = r"""
     c.querySelectorAll('.menu.open').forEach(x => x.classList.remove('open'));
     c.querySelectorAll('.toc a.on').forEach(x => x.classList.remove('on'));
     c.querySelectorAll('tr.hide').forEach(x => x.classList.remove('hide'));
-    c.querySelectorAll('.embed').forEach(x => { x.innerHTML = ''; x.classList.remove('is-frame', 'is-card'); });
+    c.querySelectorAll('.embed').forEach(x => { x.innerHTML = ''; x.removeAttribute('class'); x.className = 'embed'; });
     return c.innerHTML;
   }
   const fileInput = Object.assign(document.createElement('input'), { type: 'file', accept: 'image/*', hidden: true });
@@ -172,13 +186,11 @@ APP_JS = r"""
 
 EDIT_CSS = """
 .toc a[data-goto]{cursor:pointer}
-/* ── Khung nhúng trang Fanpage ── */
-.embed-sec{padding-top:40px}
-.embed-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.embed-bar .label{color:var(--orange)}
-.embed-bar a{font:600 13px "Be Vietnam Pro";color:var(--choco)}
-.embed.is-frame iframe{display:block;width:100%;height:calc(100vh - 40px);min-height:640px;border:1px solid var(--grey);background:#fff}
-.embed-card{border:1px solid var(--grey);background:var(--cream);padding:40px;display:grid;gap:12px;justify-items:start;max-width:720px}
+/* ── Lịch content Fanpage (dựng thẳng vào trang) ── */
+.embed{min-height:60vh}
+.embed-wait{padding:80px 0;text-align:center;color:var(--muted)}
+.embed-sec{padding:40px 0 0}
+.embed-card{border:1px solid var(--grey);background:var(--cream);padding:40px;display:grid;gap:12px;justify-items:start;max-width:720px;margin:56px auto 0}
 .embed-card b{font:700 24px/1.2 "Philosopher",serif;color:var(--choco)}
 .embed-card p{color:var(--muted)}
 .btn-dark{display:inline-block;background:var(--choco);color:#fff;text-decoration:none;font:600 14px "Be Vietnam Pro";padding:12px 20px;border-radius:2px}
