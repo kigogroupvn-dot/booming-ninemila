@@ -539,11 +539,11 @@ body.editing .slot{cursor:pointer}
   // Dùng chung bộ mã với trang lịch content (lich.js + lich.css + Google Sheet): sửa một nơi, hai nơi cùng cập nhật.
   // Lịch được dựng trong vùng tách biệt (shadow DOM) để style hai web không đè lên nhau.
   // Trên Claude (không cho tải mã/dữ liệu từ web khác): hiện thẻ giới thiệu + nút mở.
-  let lichReady;
+  let lichReady; const LV = '?v=' + Date.now(); // luôn tải bản mới nhất của lịch
   function loadLich(base) {
     if (window.NinemilaLich) return Promise.resolve();
     return lichReady ||= ['config.js', 'data.js', 'lich.js'].reduce((p, f) => p.then(() => new Promise((ok, no) => {
-      const sc = document.createElement('script'); sc.src = base + f; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc);
+      const sc = document.createElement('script'); sc.src = base + f + LV; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc);
     })), Promise.resolve()).catch(e => { lichReady = null; throw e; });
   }
   function lichCard(el, base, msg) {
@@ -558,7 +558,7 @@ body.editing .slot{cursor:pointer}
         if (!el.isConnected) return;
         el.innerHTML = '';
         const sh = el.attachShadow({ mode: 'open' });
-        sh.innerHTML = '<link rel="stylesheet" href="' + base + 'lich.css"><div></div>';
+        sh.innerHTML = '<link rel="stylesheet" href="' + base + 'lich.css' + LV + '"><div></div>';
         window.NinemilaLich.mount(sh.lastChild, { embedded: true, base });
       }).catch(() => lichCard(el, base, 'Chưa tải được lịch content. Kiểm tra mạng rồi tải lại trang, hoặc mở trang riêng.'));
     });
